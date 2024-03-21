@@ -41,4 +41,44 @@ const callback = (req,res) => {
         res.redirect(FRONTEND_URL)
     })
 }
-module.exports = {login,callback}
+
+// Function to Create Connection 
+const createConnection = () =>{
+    let instanceUrl = lcStorage.getItem('instanceUrl')
+    let accessToken = lcStorage.getItem('accessToken')
+    if(!accessToken){
+        return res.status(200).send({})
+    }
+    return new jsforce.Connection({
+        accessToken,
+        instanceUrl
+    })
+}
+//Function to get logged-in user details
+const whoAmI =(req, res)=>{
+    const conn = createConnection(res)
+    conn.identity((error,data)=>{
+        if(error){
+            //do error handling
+            handleSalesforceError(error, res)
+            return
+        }
+        res.json(data)
+    })
+}
+
+//Centralized error handler function
+
+const handleSalesforceError = (error, res)=>{
+    // console.log("error statusCode", JSON.stringify(error))
+    if(error.errorCode === 'INVALID_SESSION_ID'){
+        lcStorage.clear()
+        res.status(200).send({})
+    } else{
+        console.error("Error", error)
+        res.status(500).send(error)
+    }
+}
+
+
+module.exports = {login,callback,whoAmI}
