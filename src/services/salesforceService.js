@@ -1,8 +1,11 @@
 
 
 const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_REDIRECT_URL,FRONTEND_URL}  = require('../config')
-var jsforce = require('jsforce');
 
+const LocalStorage = require('node-localstorage').LocalStorage
+const lcStorage = new LocalStorage('./info')
+
+var jsforce = require('jsforce');
 // OAuth2 client information can be shared with multiple connections.
 var oauth2 = new jsforce.OAuth2({
   // you can change loginUrl to connect to sandbox or prerelease env.
@@ -33,8 +36,8 @@ const callback = (req,res) => {
         console.log("Access token", conn.accessToken)
         console.log("Connection", conn)
         console.log("Instance url", conn.instanceUrl)
-        // lcStorage.setItem('accessToken', conn.accessToken || '')
-        // lcStorage.setItem('instanceUrl', conn.instanceUrl || '')
+        lcStorage.setItem('accessToken', conn.accessToken || '')
+        lcStorage.setItem('instanceUrl', conn.instanceUrl || '')
         res.redirect(FRONTEND_URL)
     })
 }
