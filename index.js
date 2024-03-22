@@ -6,6 +6,7 @@ app.use(cors({origin:alloweOrigins}))
 const {PORT,SERVER_URL}  = require('./src/config')
 // const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_USER_NAME,SF_PASSWORD,SF_SECURITY_TOKEN,PORT,SERVER_URL}  = require('./src/config')
 const authController = require('./src/controllers/authController')
+const expenseController = require('./src/controllers/expenseController')
 // var jsforce = require('jsforce');
 // var conn = new jsforce.Connection({
 //     loginUrl:SF_LOGIN_URL
@@ -28,3 +29,4 @@ app.get('/',async(req,res)=>{
 })
 
 app.use('/oauth2',authController)
+app.use('/expenses',expenseController)

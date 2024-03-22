@@ -89,5 +89,17 @@ const handleSalesforceError = (error, res)=>{
     }
 }
 
+//Function to get Expenses from Salesforce
+const getExpenses = (req, res)=>{
+    const conn = createConnection(res)
+    //perform a query to fetch expenses from salesforce
+    conn.query("SELECT Id, Amount__c,Category__c, Date__c, Name, Expense_Name__c, Notes__c FROM Expense__c ORDER BY Date__c DESC ", function(error, result){
+        if(error){
+            handleSalesforceError(error, res)
+            return
+        }
+        res.json(result)
+    })
+}
 
-module.exports = {login,callback,whoAmI,logout}
+module.exports = {login,callback,whoAmI,logout,getExpenses}
