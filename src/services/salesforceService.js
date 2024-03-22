@@ -43,7 +43,7 @@ const callback = (req,res) => {
 }
 
 // Function to Create Connection 
-const createConnection = () =>{
+const createConnection = (res) =>{
     let instanceUrl = lcStorage.getItem('instanceUrl')
     let accessToken = lcStorage.getItem('accessToken')
     if(!accessToken){
@@ -67,6 +67,15 @@ const whoAmI =(req, res)=>{
     })
 }
 
+//Function to log out user 
+const logout =(req, res)=>{
+    const conn = createConnection(res);
+    conn.logout();
+    console.log('logout successful')
+    lcStorage.clear();
+    res.redirect(`${FRONTEND_URL}/login`)
+}
+
 //Centralized error handler function
 
 const handleSalesforceError = (error, res)=>{
@@ -81,4 +90,4 @@ const handleSalesforceError = (error, res)=>{
 }
 
 
-module.exports = {login,callback,whoAmI}
+module.exports = {login,callback,whoAmI,logout}
