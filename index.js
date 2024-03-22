@@ -1,13 +1,13 @@
+const {PORT,BACKEND_URL,FRONTEND_URL}  = require('./src/config')
 const express = require('express')
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser')
-const alloweOrigins = ['http://localhost:3000']
+const alloweOrigins = [FRONTEND_URL]
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use(cors({origin:alloweOrigins}))
-const {PORT,SERVER_URL}  = require('./src/config')
-// const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_USER_NAME,SF_PASSWORD,SF_SECURITY_TOKEN,PORT,SERVER_URL}  = require('./src/config')
+// const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_USER_NAME,SF_PASSWORD,SF_SECURITY_TOKEN,PORT,BACKEND_URL}  = require('./src/config')
 const authController = require('./src/controllers/authController')
 const expenseController = require('./src/controllers/expenseController')
 // var jsforce = require('jsforce');
@@ -17,7 +17,7 @@ const expenseController = require('./src/controllers/expenseController')
 
 
 app.listen(PORT,()=>{
-    //console.log(`server is running on ${SERVER_URL}`)
+    console.log(`server is running on ${BACKEND_URL} ${PORT}`)
 })
 
 app.get('/',async(req,res)=>{

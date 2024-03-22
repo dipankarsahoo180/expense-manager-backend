@@ -34,7 +34,7 @@ const callback = (req,res) => {
             return res.status(500).send(err)
         }
         //console.log("Access token", conn.accessToken)
-        //console.log("Connection", conn)
+        // console.log("Connection", conn)
         //console.log("Instance url", conn.instanceUrl)
         lcStorage.setItem('accessToken', conn.accessToken || '')
         lcStorage.setItem('instanceUrl', conn.instanceUrl || '')
@@ -69,8 +69,6 @@ const whoAmI =(req, res)=>{
 
 //Function to log out user 
 const logout =(req, res)=>{
-    const conn = createConnection(res);
-    conn.logout();
     //console.log('logout successful')
     lcStorage.clear();
     res.redirect(`${FRONTEND_URL}/login`)

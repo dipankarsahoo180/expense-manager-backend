@@ -8,6 +8,6 @@ module.exports={
     SF_PASSWORD:process.env.SF_PASSWORD,
     SF_SECURITY_TOKEN:process.env.SF_SECURITY_TOKEN,
     PORT: process.env.PORT,
-    SERVER_URL :process.env.SERVER_URL,
+    BACKEND_URL :process.env.BACKEND_URL,
     FRONTEND_URL :process.env.FRONTEND_URL,
 }
