@@ -17,7 +17,7 @@ const expenseController = require('./src/controllers/expenseController')
 
 
 app.listen(PORT,()=>{
-    console.log(`server is running on ${SERVER_URL}`)
+    //console.log(`server is running on ${SERVER_URL}`)
 })
 
 app.get('/',async(req,res)=>{
@@ -25,7 +25,7 @@ app.get('/',async(req,res)=>{
     //     if (err) { return console.error(err); }
     //     conn.query('SELECT Id, Name FROM Account', function(err, res) {
     //       if (err) { return console.error(err); }
-    //       console.log(res);
+    //       //console.log(res);
     //     });
     //   });
     res.send('<h1>Congrats</h1>')

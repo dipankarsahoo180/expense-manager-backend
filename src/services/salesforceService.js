@@ -21,21 +21,21 @@ const login = (req,res) => {
 
 const callback = (req,res) => {
     const {code} = req.query;
-    console.log('authorization code is',code)
+    //console.log('authorization code is',code)
     if(!code){
-        console.error("Failed to get authorization code from server callback")
+        //console.error("Failed to get authorization code from server callback")
         return res.status(500).send("Failed to get authorization code from server callback")
     }
-    // console.log("code", code)
+    // //console.log("code", code)
     const conn = new jsforce.Connection({oauth2:oauth2})
     conn.authorize(code, function(err){
         if(err){
-            console.error(err);
+            //console.error(err);
             return res.status(500).send(err)
         }
-        console.log("Access token", conn.accessToken)
-        console.log("Connection", conn)
-        console.log("Instance url", conn.instanceUrl)
+        //console.log("Access token", conn.accessToken)
+        //console.log("Connection", conn)
+        //console.log("Instance url", conn.instanceUrl)
         lcStorage.setItem('accessToken', conn.accessToken || '')
         lcStorage.setItem('instanceUrl', conn.instanceUrl || '')
         res.redirect(FRONTEND_URL)
@@ -71,7 +71,7 @@ const whoAmI =(req, res)=>{
 const logout =(req, res)=>{
     const conn = createConnection(res);
     conn.logout();
-    console.log('logout successful')
+    //console.log('logout successful')
     lcStorage.clear();
     res.redirect(`${FRONTEND_URL}/login`)
 }
@@ -79,12 +79,12 @@ const logout =(req, res)=>{
 //Centralized error handler function
 
 const handleSalesforceError = (error, res)=>{
-    // console.log("error statusCode", JSON.stringify(error))
+    // //console.log("error statusCode", JSON.stringify(error))
     if(error.errorCode === 'INVALID_SESSION_ID'){
         lcStorage.clear()
         res.status(200).send({})
     } else{
-        console.error("Error", error)
+        //console.error("Error", error)
         res.status(500).send(error)
     }
 }
