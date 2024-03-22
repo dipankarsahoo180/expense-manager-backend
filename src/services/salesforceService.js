@@ -4,7 +4,7 @@ const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_REDIRECT_URL,FRONTEND_URL} 
 
 const LocalStorage = require('node-localstorage').LocalStorage
 const lcStorage = new LocalStorage('./info')
-
+//https://jsforce.github.io/document/
 var jsforce = require('jsforce');
 // OAuth2 client information can be shared with multiple connections.
 var oauth2 = new jsforce.OAuth2({
@@ -101,5 +101,43 @@ const getExpenses = (req, res)=>{
         res.json(result)
     })
 }
+const createExpense =(req, res)=>{
+    const conn = createConnection(res)
+    const {Expense_Name__c, Amount__c, Date__c,Category__c, Notes__c } = req.body
+    //perform a query to fetch expenses from salesforce
+    conn.sobject("Expense__c").create({Expense_Name__c, Amount__c, Date__c,Category__c, Notes__c }, function(error, result){
+        if(error){
+            handleSalesforceError(error, res)
+            return
+        }
+        res.json(result)
+    })
+}
+const updateExpense =(req, res)=>{
+    const id = req.params?.id
+    const conn = createConnection(res)
+    const {Expense_Name__c, Amount__c, Date__c,Category__c, Notes__c } = req.body
+    //perform a query to fetch expenses from salesforce
+    conn.sobject("Expense__c").update({Id:id,Expense_Name__c, Amount__c, Date__c,Category__c, Notes__c }, function(error, result){
+        if(error){
+            handleSalesforceError(error, res)
+            return
+        }
+        res.json(result)
+    })
+}
 
-module.exports = {login,callback,whoAmI,logout,getExpenses}
+const deleteExpense =(req, res)=>{
+    const id = req.params?.id
+    const conn = createConnection(res)
+    //perform a query to fetch expenses from salesforce
+    conn.sobject("Expense__c").destroy(id, function(error, result){
+        if(error){
+            handleSalesforceError(error, res)
+            return
+        }
+        res.json(result)
+    })
+}
+
+module.exports = {login,callback,whoAmI,logout,getExpenses, createExpense,updateExpense,deleteExpense}

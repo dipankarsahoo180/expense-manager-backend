@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express();
 const cors = require('cors');
+const bodyParser = require('body-parser')
 const alloweOrigins = ['http://localhost:3000']
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 app.use(cors({origin:alloweOrigins}))
 const {PORT,SERVER_URL}  = require('./src/config')
 // const {SF_CLIENT_ID,SF_CLIENT_SECRET,SF_LOGIN_URL,SF_USER_NAME,SF_PASSWORD,SF_SECURITY_TOKEN,PORT,SERVER_URL}  = require('./src/config')
